@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure your application as:
 #
-#     config :scraping_robot, key: :value
+#     config :dealer_scraping_robot, key: :value
 #
 # and access this configuration in your application as:
 #
-#     Application.get_env(:scraping_robot, :key)
+#     Application.get_env(:dealer_scraping_robot, :key)
 #
 # You can also configure a third-party app:
 #

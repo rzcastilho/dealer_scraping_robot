@@ -1,10 +1,18 @@
 defmodule DealerRaterReviews do
-  @moduledoc false
+  @moduledoc """
+  Wrapper for review page calls at [www.dealerrater.com](https://www.dealerrater.com).
+  """
+
+  @endpoint "https://www.dealerrater.com"
 
   use HTTPoison.Base
 
-  def process_request_url(url) do
-    "https://www.dealerrater.com" <> url
+  def process_request_url(uri) do
+    @endpoint <> uri
+  end
+
+  def process_request_options(options) do
+    options ++ [recv_timeout: 15000]
   end
 
   def process_response_body(body) do
@@ -15,3 +23,4 @@ defmodule DealerRaterReviews do
   end
 
 end
+

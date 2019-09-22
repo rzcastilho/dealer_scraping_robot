@@ -1,6 +1,6 @@
-defmodule ScrapingRobot do
+defmodule DealerScrapingRobot do
   @moduledoc """
-  Documentation for ScrapingRobot.
+  Documentation for DealerScrapingRobot.
   """
 
   def main(args \\ []) do
@@ -10,7 +10,11 @@ defmodule ScrapingRobot do
   end
 
   defp parse_args(args) do
-    {options, _, _} = OptionParser.parse(args, switches: [help: :boolean, dealer: :string, pages: :integer], aliases: [h: :help, d: :dealer, p: :pages])
+    {options, _, _} = OptionParser.parse(
+      args,
+      switches: [help: :boolean, dealer: :string, pages: :integer],
+      aliases: [h: :help, d: :dealer, p: :pages]
+    )
     options
   end
 
@@ -22,7 +26,7 @@ defmodule ScrapingRobot do
       Arguments:
         * -d/--dealer: Dealer Name
         * -p/--pages: Number of review pages to analyze
-      Usage: $ ./scraping_robot -d <dealer_name> [-p <number_of_pages>]
+      Usage: $ ./dealer_scraping_robot -d <dealer_name> [-p <number_of_pages>]
       """
     ]
   end
@@ -30,7 +34,7 @@ defmodule ScrapingRobot do
   defp run(dealer: dealer, pages: pages) do
     dealer
     |> DealerRater.find_dealer_page()
-    |> DealerRater.get_reviews(pages)
+    |> DealerRater.get_overly_positive_reviews(pages)
     |> Jason.encode!(pretty: true)
     |> IO.puts
   end

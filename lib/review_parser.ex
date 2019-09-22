@@ -1,7 +1,8 @@
 defmodule ReviewParser do
   @moduledoc """
-    Parses the review snippets from www.dealerrater.com into `Model.Review` model.
+  Parses the review snippets from [www.dealerrater.com](https://www.dealerrater.com) into `Model.Review` model.
   """
+
 
   def parse(review) do
     %Model.Review{

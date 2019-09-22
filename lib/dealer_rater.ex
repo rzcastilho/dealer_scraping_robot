@@ -32,6 +32,7 @@ defmodule DealerRater do
   def find_dealer_page(dealer) do
     Hound.start_session
 
+    # Searches dealer by name
     navigate_to "#{@dealerrater_url}/search/?q=" <> URI.encode(dealer)
     find_element(:class, "gs-title")
     |> inner_html()
@@ -40,7 +41,8 @@ defmodule DealerRater do
     |> List.first
     |> navigate_to
 
-    link = find_element(:id, "link")
+    # Gets the first link, click on, and find the reference for reviews page
+    uri = find_element(:id, "link")
     |> inner_html()
     |> Floki.parse()
     |> Floki.find("a:fl-contains('Reviews')")
@@ -48,27 +50,34 @@ defmodule DealerRater do
     |> List.first
     |> String.split("#")
     |> List.first
+    uri
 
+  after
     Hound.end_session
-
-    link
   end
 
   @doc """
-  Searches for a dealer and navigates to the first result to get the reference to the reviews page.
+  Gets the overly positive reviews from pages from the first to the that passed as parameter.
   """
-  def get_reviews(link, count) do
+  def get_overly_positive_reviews(uri, count) do
     1..count
-    |> Enum.map(fn page -> "#{link}page#{page}" end)
-    |> Enum.map(&get_review/1)
+    |> Enum.map(fn page -> "#{uri}page#{page}" end)
+    |> Enum.map(&get_review_page/1)
     |> List.flatten
+    |> Enum.filter(&ReviewAnalysis.max_rating_match/1)
+    |> Enum.map(&ReviewAnalysis.overly_positive_words_count/1)
+    |> Enum.sort()
   end
 
-  def get_review(page) do
-    case DealerRaterReviews.get!(page, [recv_timeout: 15000]) do
+  def get_review_page(page) do
+    case DealerRaterReviews.get!(page) do
       %HTTPoison.Response{body: body} ->
         body
     end
+  end
+
+  def sort_by_overly_positive_words(%Model.Review{}) do
+
   end
 
 end

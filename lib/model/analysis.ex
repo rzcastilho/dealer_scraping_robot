@@ -1,9 +1,9 @@
 defmodule Model.Analysis do
   @moduledoc """
-    Ratings representation in `Model.Review` model.
+  Struct containing some useful analysis.
   """
 
   @derive Jason.Encoder
-  defstruct [word_count: %{}]
+  defstruct [overly_positive_words_count: %{}]
 
 end

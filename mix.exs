@@ -1,9 +1,9 @@
-defmodule ScrapingRobot.MixProject do
+defmodule DealerScrapingRobot.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :scraping_robot,
+      app: :dealer_scraping_robot,
       version: "0.1.0",
       elixir: "~> 1.9.1",
       start_permanent: Mix.env() == :prod,
@@ -18,8 +18,8 @@ defmodule ScrapingRobot.MixProject do
       ],
       # Docs
       name: "Scraping Robot",
-      source_url: "https://github.com/rzcastilho/scraping_robot",
-      homepage_url: "https://github.com/rzcastilho/scraping_robot",
+      source_url: "https://github.com/rzcastilho/dealer_scraping_robot",
+      homepage_url: "https://github.com/rzcastilho/dealer_scraping_robot",
       docs: [
         main: "readme",
         extras: ["README.md"]
@@ -48,7 +48,7 @@ defmodule ScrapingRobot.MixProject do
   end
 
   defp escript do
-    [main_module: ScrapingRobot]
+    [main_module: DealerScrapingRobot]
   end
 
 end
