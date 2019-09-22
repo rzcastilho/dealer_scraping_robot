@@ -5,24 +5,50 @@ defmodule ScrapingRobot.MixProject do
     [
       app: :scraping_robot,
       version: "0.1.0",
-      elixir: "~> 1.8",
+      elixir: "~> 1.9.1",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      escript: escript(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ],
+      # Docs
+      name: "Scraping Robot",
+      source_url: "https://github.com/rzcastilho/scraping_robot",
+      homepage_url: "https://github.com/rzcastilho/scraping_robot",
+      docs: [
+        main: "readme",
+        extras: ["README.md"]
+      ]
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:logger]
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+      {:ex_doc, "~> 0.21.2", only: [:dev, :test]},
+      {:credo, "~> 1.1.4", only: [:dev, :test]},
+      {:excoveralls, "~> 0.11.2", only: [:dev, :test]},
+      {:httpoison, "~> 1.5"},
+      {:floki, "~> 0.23.0"},
+      {:hound, "~> 1.0"},
+      {:timex, "~> 3.6.1"},
+      {:jason, "~> 1.1"},
+      {:tzdata, "~> 0.1.8", override: true}
     ]
   end
+
+  defp escript do
+    [main_module: ScrapingRobot]
+  end
+
 end
