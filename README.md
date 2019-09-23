@@ -1,21 +1,37 @@
-# Dealer Scraping Robot
+# Dealer Scraping Robot  [![Build Status](https://travis-ci.org/rzcastilho/dealer_scraping_robot.svg?branch=master "Build Status")](http://travis-ci.org/rzcastilho/dealer_scraping_robot) [![Coverage Status](https://coveralls.io/repos/github/rzcastilho/dealer_scraping_robot/badge.svg)](https://coveralls.io/github/rzcastilho/dealer_scraping_robot)
 
-**TODO: Add description**
+Gets the overly positive reviews of the informed dealer and by default returns the first three results from the five first review pages. 
 
-## Installation
+## Running
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `dealer_scraping_robot` to your list of dependencies in `mix.exs`:
+Before run install and start PhantomJs.
 
-```elixir
-def deps do
-  [
-    {:dealer_scraping_robot, "~> 0.1.0"}
-  ]
-end
+```shell script
+$ npm install -f phantomjs
+$ phantomjs --wd
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/dealer_scraping_robot](https://hexdocs.pm/dealer_scraping_robot).
+Build escript.
+
+```shell script
+$ mix escript.build
+```
+
+Run passing the dealer name.
+
+```shell script
+$ ./dealer_scraping_robot -d "McKaig Chevrolet Buick"
+```
+
+To get more options, run with `--help` or `-h` flag.
+
+```shell script
+$ ./dealer_scraping_robot --help"
+```
+
+## Links
+
+  * [github.com](https://github.com/rzcastilho/dealer_scraping_robot)
+  * [coveralls.io](https://coveralls.io/github/rzcastilho/dealer_scraping_robot)
+  * [travis-ci.org](https://travis-ci.org/rzcastilho/dealer_scraping_robot)
 
