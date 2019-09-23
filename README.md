@@ -26,7 +26,7 @@ $ ./dealer_scraping_robot -d "McKaig Chevrolet Buick"
 To get more options, run with `--help` or `-h` flag.
 
 ```shell script
-$ ./dealer_scraping_robot --help"
+$ ./dealer_scraping_robot --help
 ```
 
 ## Links

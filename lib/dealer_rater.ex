@@ -26,6 +26,7 @@ defmodule DealerRater do
 
     # Searches dealer by name
     navigate_to "#{@dealerrater_url}/search/?q=" <> URI.encode(dealer)
+
     find_element(:class, "gs-title")
     |> inner_html()
     |> Floki.parse()
