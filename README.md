@@ -1,4 +1,4 @@
-# Dealer Scraping Robot  [![Build Status](https://travis-ci.org/rzcastilho/dealer_scraping_robot.svg?branch=master "Build Status")](http://travis-ci.org/rzcastilho/dealer_scraping_robot) [![Coverage Status](https://coveralls.io/repos/github/rzcastilho/dealer_scraping_robot/badge.svg)](https://coveralls.io/github/rzcastilho/dealer_scraping_robot)
+# Dealer Scraping Robot  [![Build Status](https://api.travis-ci.org/rzcastilho/dealer_scraping_robot.svg?branch=master "Build Status")](http://travis-ci.org/rzcastilho/dealer_scraping_robot) [![Coverage Status](https://coveralls.io/repos/github/rzcastilho/dealer_scraping_robot/badge.svg?branch=master)](https://coveralls.io/github/rzcastilho/dealer_scraping_robot?branch=master)
 
 Gets the overly positive reviews of the informed dealer and by default returns the first three results from the five first review pages. 
 
