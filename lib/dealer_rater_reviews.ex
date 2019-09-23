@@ -12,7 +12,7 @@ defmodule DealerRaterReviews do
   end
 
   def process_request_options(options) do
-    options ++ [recv_timeout: 15000]
+    options ++ [recv_timeout: 15_000]
   end
 
   def process_response_body(body) do
@@ -23,4 +23,3 @@ defmodule DealerRaterReviews do
   end
 
 end
-

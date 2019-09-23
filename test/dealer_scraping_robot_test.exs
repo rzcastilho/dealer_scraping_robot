@@ -1,8 +1,7 @@
 defmodule DealerScrapingRobotTest do
+  @moduledoc false
+
   use ExUnit.Case
   doctest DealerScrapingRobot
 
-  test "greets the world" do
-    assert DealerScrapingRobot.hello() == :world
-  end
 end

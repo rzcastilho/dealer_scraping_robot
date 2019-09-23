@@ -3,6 +3,23 @@ defmodule DealerScrapingRobot do
   Documentation for DealerScrapingRobot.
   """
 
+  @doc """
+  Main function that scrapes the overly positive reviews from a dealer.
+
+  ## Examples
+
+      iex> DealerScrapingRobot.main(["--help"])
+      :ok
+
+      iex> DealerScrapingRobot.main()
+      :ok
+
+      iex> DealerScrapingRobot.main(["-d", "McKaig Chevrolet Buick"])
+      :ok
+
+      iex> DealerScrapingRobot.main(["-d", "McKaig Chevrolet Buick", "-p", "1"])
+      :ok
+  """
   def main(args \\ []) do
     args
     |> parse_args

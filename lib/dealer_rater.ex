@@ -1,25 +1,6 @@
 defmodule DealerRater do
   @moduledoc """
-  Finds dealer page and gets an amount of parsed reviews as the model below.
-
-  ```json
-  {
-    "body": "I was stuck on the side of the road with a flat tire and a flat spare. I called mckaigs and spoke with Aaron in the service department and he came to me with a spare tire they had and replaced it for me! I followed him to the dealership and he got both of my tires fixed, taking all of the stress out of a stressful situation! Best customer service I’ve encountered!",
-    "date": "2019-09-21T00:00:00",
-    "dealership_rating": 50,
-    "ratings": {
-      "customer_service": 50,
-      "experience": 50,
-      "friendliness": 50,
-      "pricing": 50,
-      "quality_of_work": 50
-    },
-    "reason_for_visit": "SERVICE VISIT",
-    "title": "Customer service",
-    "user": "Jesse Garland"
-  }
-  ```
-
+  Finds dealer page and gets an amount of parsed reviews in `Model.Review` model.
   """
 
   use Hound.Helpers
@@ -27,7 +8,15 @@ defmodule DealerRater do
   @dealerrater_url "https://www.dealerrater.com"
 
   @doc """
-  Searches for a dealer and navigates to the first result to get the reference to the reviews page.
+  Searches for a dealer and navigates to the first result getting reference to the reviews page.
+
+  ## Examples
+
+      iex> DealerRater.find_dealer_page("McKaig Chevrolet Buick")
+      "/dealer/McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685/"
+
+      iex> DealerRater.find_dealer_page("Jack Daniels Audi")
+      "/dealer/Jack-Daniels-Audi-of-Upper-Saddle-River-dealer-reviews-24186/"
   """
   def find_dealer_page(dealer) do
     Hound.start_session
@@ -66,7 +55,7 @@ defmodule DealerRater do
     |> List.flatten
     |> Enum.filter(&ReviewAnalysis.max_rating_match/1)
     |> Enum.map(&ReviewAnalysis.overly_positive_words_count/1)
-    |> Enum.sort()
+    |> Enum.sort(&sort_by_overly_positive_words/2)
   end
 
   def get_review_page(page) do
@@ -76,8 +65,10 @@ defmodule DealerRater do
     end
   end
 
-  def sort_by_overly_positive_words(%Model.Review{}) do
-
+  def sort_by_overly_positive_words(%Model.Review{analysis: %Model.Analysis{overly_positive_words_count: words1}}, %Model.Review{analysis: %Model.Analysis{overly_positive_words_count: words2}}) do
+    with count1 <- words1 |> Map.keys |> Enum.reduce(0, fn word, acc -> words1[word] + acc end),
+         count2 <- words2 |> Map.keys |> Enum.reduce(0, fn word, acc -> words2[word] + acc end),
+    do: count1 > count2
   end
 
 end
