@@ -3,5 +3,12 @@ elixir:
   - 1.9.1
 otp_release:
   - '22.0'
+env:
+  - WEBDRIVER=phantomjs
+before_script:
+  - "export DISPLAY=:99.0"
+  - "npm install -g phantomjs"
+  - "nohup phantomjs -w &"
+  - "sleep 3"
 script:
   - "MIX_ENV=test mix coveralls.travis"

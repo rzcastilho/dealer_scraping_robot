@@ -15,6 +15,9 @@ defmodule DealerRater do
       iex> DealerRater.find_dealer_page("McKaig Chevrolet Buick")
       "/dealer/McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685/"
 
+      iex> DealerRater.find_dealer_page("Nóis Capota Mais Num Breca")
+      :notfound
+
       iex> DealerRater.find_dealer_page("Jack Daniels Audi")
       "/dealer/Jack-Daniels-Audi-of-Upper-Saddle-River-dealer-reviews-24186/"
   """
@@ -23,6 +26,7 @@ defmodule DealerRater do
 
     # Searches dealer by name
     navigate_to "#{@dealerrater_url}/search/?q=" <> URI.encode(dealer)
+
     find_element(:class, "gs-title")
     |> inner_html()
     |> Floki.parse()
@@ -40,7 +44,8 @@ defmodule DealerRater do
     |> String.split("#")
     |> List.first
     uri
-
+  rescue
+    _ -> :notfound
   after
     Hound.end_session
   end
@@ -48,21 +53,33 @@ defmodule DealerRater do
   @doc """
   Gets the overly positive reviews from pages from the first to the that passed as parameter.
   """
-  def get_overly_positive_reviews(uri, count) do
-    1..count
-    |> Enum.map(fn page -> "#{uri}page#{page}" end)
-    |> Enum.map(&get_review_page/1)
+  def get_overly_positive_reviews(:notfound, _, _) do
+    %{error: "Dealer not found"}
+  end
+
+  def get_overly_positive_reviews(uri, pages, count) do
+    1..pages
+    |> Task.async_stream(fn page -> "#{uri}page#{page}" end)
+    |> Task.async_stream(&get_review_page/1, timeout: 15_000)
+    |> Enum.map(&get_result/1)
     |> List.flatten
     |> Enum.filter(&ReviewAnalysis.max_rating_match/1)
     |> Enum.map(&ReviewAnalysis.overly_positive_words_count/1)
     |> Enum.sort(&sort_by_overly_positive_words/2)
+    |> Enum.take(count)
   end
 
-  def get_review_page(page) do
+  def get_review_page({:ok, page}) do
     case DealerRaterReviews.get!(page) do
-      %HTTPoison.Response{body: body} ->
+      %HTTPoison.Response{body: body, status_code: 200} ->
         body
+      _ ->
+        []
     end
+  end
+
+  def get_result({:ok, list}) do
+    list
   end
 
   def sort_by_overly_positive_words(%Model.Review{analysis: %Model.Analysis{overly_positive_words_count: words1}}, %Model.Review{analysis: %Model.Analysis{overly_positive_words_count: words2}}) do
