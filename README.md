@@ -30,20 +30,21 @@ The criterias are the reviews with max ratings in all items...
 
 Before run install and start PhantomJs.
 
-```shell script
+```bash
 $ npm install -f phantomjs
 $ phantomjs --wd
 ```
 
 Build escript.
 
-```shell script
+```bash
+$ mix deps.get
 $ mix escript.build
 ```
 
 Run passing the dealer name.
 
-```shell script
+```bash
 $ ./dealer_scraping_robot -d "McKaig Chevrolet Buick"
 ```
 
@@ -120,13 +121,13 @@ Output sample.
 
 To get more options, run with `--help` or `-h` flag.
 
-```shell script
+```bash
 $ ./dealer_scraping_robot --help
 ```
 
 ## Links
 
-  * [github.com](https://github.com/rzcastilho/dealer_scraping_robot)
-  * [coveralls.io](https://coveralls.io/github/rzcastilho/dealer_scraping_robot)
-  * [travis-ci.org](https://travis-ci.org/rzcastilho/dealer_scraping_robot)
+  * [Repository - github.com](https://github.com/rzcastilho/dealer_scraping_robot)
+  * [Code Coverage - coveralls.io](https://coveralls.io/github/rzcastilho/dealer_scraping_robot)
+  * [CI - travis-ci.org](https://travis-ci.org/rzcastilho/dealer_scraping_robot)
 
