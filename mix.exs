@@ -23,7 +23,8 @@ defmodule DealerScrapingRobot.MixProject do
       docs: [
         main: "readme",
         extras: ["README.md"]
-      ]
+      ],
+      aliases: aliases()
     ]
   end
 
@@ -49,6 +50,15 @@ defmodule DealerScrapingRobot.MixProject do
 
   defp escript do
     [main_module: DealerScrapingRobot]
+  end
+
+  defp aliases do
+    [docs: ["docs", &copy_images/1]]
+  end
+
+  defp copy_images(_) do
+    File.mkdir_p("./doc/images")
+    File.cp_r("./images", "./doc/images")
   end
 
 end
