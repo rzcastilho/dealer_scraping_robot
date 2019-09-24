@@ -4,7 +4,7 @@ defmodule DealerScrapingRobot.MixProject do
   def project do
     [
       app: :dealer_scraping_robot,
-      version: "0.2.0",
+      version: "0.3.0",
       elixir: "~> 1.9.1",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -17,13 +17,14 @@ defmodule DealerScrapingRobot.MixProject do
         "coveralls.html": :test
       ],
       # Docs
-      name: "Scraping Robot",
+      name: "Dealer Scraping Robot",
       source_url: "https://github.com/rzcastilho/dealer_scraping_robot",
       homepage_url: "https://github.com/rzcastilho/dealer_scraping_robot",
       docs: [
         main: "readme",
         extras: ["README.md"]
-      ]
+      ],
+      aliases: aliases()
     ]
   end
 
@@ -49,6 +50,15 @@ defmodule DealerScrapingRobot.MixProject do
 
   defp escript do
     [main_module: DealerScrapingRobot]
+  end
+
+  defp aliases do
+    [docs: ["docs", &copy_images/1]]
+  end
+
+  defp copy_images(_) do
+    File.mkdir_p("./doc/images")
+    File.cp_r("./images", "./doc/images")
   end
 
 end
