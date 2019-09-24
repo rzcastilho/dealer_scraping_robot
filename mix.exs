@@ -17,7 +17,7 @@ defmodule DealerScrapingRobot.MixProject do
         "coveralls.html": :test
       ],
       # Docs
-      name: "Scraping Robot",
+      name: "Dealer Scraping Robot",
       source_url: "https://github.com/rzcastilho/dealer_scraping_robot",
       homepage_url: "https://github.com/rzcastilho/dealer_scraping_robot",
       docs: [
