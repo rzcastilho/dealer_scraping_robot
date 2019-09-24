@@ -59,8 +59,9 @@ defmodule DealerRater do
 
   def get_overly_positive_reviews(uri, pages, count) do
     1..pages
-    |> Enum.map(fn page -> "#{uri}page#{page}" end)
-    |> Enum.map(&get_review_page/1)
+    |> Task.async_stream(fn page -> "#{uri}page#{page}" end)
+    |> Task.async_stream(&get_review_page/1, timeout: 15_000)
+    |> Enum.map(&get_result/1)
     |> List.flatten
     |> Enum.filter(&ReviewAnalysis.max_rating_match/1)
     |> Enum.map(&ReviewAnalysis.overly_positive_words_count/1)
@@ -68,11 +69,17 @@ defmodule DealerRater do
     |> Enum.take(count)
   end
 
-  def get_review_page(page) do
+  def get_review_page({:ok, page}) do
     case DealerRaterReviews.get!(page) do
-      %HTTPoison.Response{body: body} ->
+      %HTTPoison.Response{body: body, status_code: 200} ->
         body
+      _ ->
+        []
     end
+  end
+
+  def get_result({:ok, list}) do
+    list
   end
 
   def sort_by_overly_positive_words(%Model.Review{analysis: %Model.Analysis{overly_positive_words_count: words1}}, %Model.Review{analysis: %Model.Analysis{overly_positive_words_count: words2}}) do

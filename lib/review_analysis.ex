@@ -15,7 +15,8 @@ defmodule ReviewAnalysis do
     "excellence",
     "highest",
     "knowledgeable",
-    "fan"
+    "fan",
+    "great"
   ]
 
   @doc """

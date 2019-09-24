@@ -1,6 +1,6 @@
 defmodule DealerScrapingRobot do
   @moduledoc """
-  Documentation for DealerScrapingRobot.
+  Gets the ***"overly positive reviews"*** of the informed dealer and by default returns the first three results from the five first review pages.
   """
 
   @default_pages 5

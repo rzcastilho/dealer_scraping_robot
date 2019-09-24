@@ -8,14 +8,16 @@ defmodule DealerRaterTest do
     assert %{error: "Dealer not found"} = DealerRater.get_overly_positive_reviews(:notfound, 5, 3)
   end
 
-  test "should return 3 results" do
-    assert 3 == DealerRater.get_overly_positive_reviews("/dealer/McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685/", 1, 3)
-    |> Enum.count()
+  test "should return 3 reviews" do
+    reviews = DealerRater.get_overly_positive_reviews("/dealer/McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685/", 1, 3)
+    assert Enum.count(reviews) == 3
+    assert %Model.Review{ratings: %Model.Ratings{}, analysis: %Model.Analysis{}} = hd(reviews)
   end
 
-  test "should return 5 results" do
-    assert 5 == DealerRater.get_overly_positive_reviews("/dealer/McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685/", 2, 5)
-    |> Enum.count()
+  test "should return 5 reviews" do
+    reviews = DealerRater.get_overly_positive_reviews("/dealer/McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685/", 2, 5)
+    assert Enum.count(reviews) == 5
+    assert %Model.Review{ratings: %Model.Ratings{}, analysis: %Model.Analysis{}} = hd(reviews)
   end
 
 end
